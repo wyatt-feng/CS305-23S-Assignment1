@@ -1,7 +1,5 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
----
-
 ## Introduction to the Assignment
 
 Quote from Wikipedia:
