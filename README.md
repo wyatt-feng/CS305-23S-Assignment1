@@ -13,9 +13,9 @@ The goal of this assignment is to implement an **FTP Server** in Python. Minimal
 Unfortunately, FTP is a highly developed protocol, so there is not much information or blog posts about the details. We try to include everything you need in this document, but if there is anything we ignore, feel free to reach out to your SA. Because SA may not be available promptly upon asking, you can alternatively read the following document and figure it out for your own sake:
 
  - Wikipedia:
-  - [File Transfer Protocol](https://en.wikipedia.org/wiki/File_Transfer_Protocol)
-  - [List of FTP commands](https://en.wikipedia.org/wiki/List_of_FTP_commands)
-  - [List of FTP server return codes](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes)
+     - [File Transfer Protocol](https://en.wikipedia.org/wiki/File_Transfer_Protocol)
+     - [List of FTP commands](https://en.wikipedia.org/wiki/List_of_FTP_commands)
+     - [List of FTP server return codes](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes)
  - [RFC 959](https://datatracker.ietf.org/doc/html/rfc959): Definition of FTP
  - [RFC 2428](https://datatracker.ietf.org/doc/html/rfc2428): Definition of EPRT and EPSV commands
  - [RFC 5797](https://datatracker.ietf.org/doc/html/rfc5797): List of all FTP commands
