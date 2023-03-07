@@ -10,13 +10,13 @@ The goal of this assignment is to implement an **FTP Server** in Python. Minimal
 
 Unfortunately, FTP is a highly developed protocol, so there is not much information or blog posts about the details. We try to include everything you need in this document, but if there is anything we ignore, feel free to reach out to your SA. Because SA may not be available promptly upon asking, you can alternatively read the following document and figure it out for your own sake:
 
- - Wikipedia:
-     - [File Transfer Protocol](https://en.wikipedia.org/wiki/File_Transfer_Protocol)
-     - [List of FTP commands](https://en.wikipedia.org/wiki/List_of_FTP_commands)
-     - [List of FTP server return codes](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes)
- - [RFC 959](https://datatracker.ietf.org/doc/html/rfc959): Definition of FTP
- - [RFC 2428](https://datatracker.ietf.org/doc/html/rfc2428): Definition of EPRT and EPSV commands
- - [RFC 5797](https://datatracker.ietf.org/doc/html/rfc5797): List of all FTP commands
+- Wikipedia:
+  - [File Transfer Protocol](https://en.wikipedia.org/wiki/File_Transfer_Protocol)
+  - [List of FTP commands](https://en.wikipedia.org/wiki/List_of_FTP_commands)
+  - [List of FTP server return codes](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes)
+- [RFC 959](https://datatracker.ietf.org/doc/html/rfc959): Definition of FTP
+- [RFC 2428](https://datatracker.ietf.org/doc/html/rfc2428): Definition of EPRT and EPSV commands
+- [RFC 5797](https://datatracker.ietf.org/doc/html/rfc5797): List of all FTP commands
 
 In case you know nothing about RFC, A **Request for Commands**(RFC) is a publication in a series from IETF who is in charge of setting the standards. Basically all internet standards are defined in RFCs. Unluckily, they are also known to be notoriously incomprehensible. If you need extra help reading them, refer to [this](https://www.mnot.net/blog/2018/07/31/read_rfc).
 
@@ -24,7 +24,31 @@ Don't be frightened - you only need ~3 hours to score 60, and another ~2 hours c
 
 ## Introduction to FTP
 
-TBD
+FTP protocol uses TCP(you can use socket in python) link for file transmission. The establishment of FTP connection is divided into port active mode and passive mode. In order to simplify, we implement the port mode FTP protocol this time.
+
+FTP uses those following command to control its status:
+
+| Command | Description                                                                |
+| ------- | -------------------------------------------------------------------------- |
+| USER    | Authentication username.                                                   |
+| PORT    | Specifies an address and port to which the server should connect.          |
+| EPRT    | Specifies an extended address and port to which the server should connect. |
+| QUIT    | Disconnect.                                                                |
+| STOR    | Accept the data and to store the data as a file at the server site.        |
+| RETR    | Retrieve a copy of the file.                                               |
+| SYST    | Return system type.                                                        |
+| SIZE    | Return the size of a file.                                                 |
+
+And those command you should make them can run correctly. 
+
+You should remember that you are the **SERVER**
+
+In port mode we connect client to server by following steps:
+
+1. Server open port 21, wait for connection.
+2. The client sends a request to establish a connection, and the server responds to establish a control connection.
+3. The client sends the PORT command to tell the server the port number and address that the client temporarily connects to. The information in PORT is the ip address and two X and Y values. The client port number is calculated by X*256+Y.
+4. The server establishes a connection with the client to transfer file data.
 
 ## Environment Setup
 
