@@ -29,11 +29,11 @@ FTP protocol uses TCP(you can use socket in python) link for file transmission. 
 FTP uses those following command to control its status:
 
 | Command | Description                                                                | Usage                          |
-| ------- | -------------------------------------------------------------------------- |--------------------------------|
+| ------- | -------------------------------------------------------------------------- | ------------------------------ |
 | USER    | Authentication username.                                                   | USER username                  |
 | PORT    | Specifies an address and port to which the server should connect.          | PORT xxx,xxx,xxx,xxx,yyy,yyy   |
-| EPRT    | Specifies an extended address and port to which the server should connect. | EPRT \|xxx.xxx.xxx.xxx\|yyyyy\||
-| QUIT    | Disconnect.                                                                | QUIT                           | 
+| EPRT    | Specifies an extended address and port to which the server should connect. | EPRT\|xxx.xxx.xxx.xxx\|yyyyy\| |
+| QUIT    | Disconnect.                                                                | QUIT                           |
 | STOR    | Accept the data and to store the data as a file at the server site.        | STOR filename                  |
 | RETR    | Retrieve a copy of the file.                                               | RETR filename                  |
 | SYST    | Return system type.                                                        | SYST                           |
@@ -53,23 +53,24 @@ Each command should be ended with `\r\n`, not `\r` or `\n`. Otherwise, the comma
 In response to the commands, the server will respond a 3-digit status code, followed by a sentence explaining the status code. For the meaning and common usage, you can refer to [this](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes). The same as commands, each response must be ended with `\r\n`.
 
 Here are some common responses:
- - 220 CS305 FTP server ready. (Welcome message. You can modify the name of the server name.)
- - 331 Username ok, send password. (Optional)
- - 230 Login successful.
- - 200 Type set to: Binary.
- - 213 xxxx (xxxx represents the size of the file)
- - 200 Active data connection established.
- - 125 Data connection already open. Transfer starting.
- - 226 Transfer complete.
- - 221 Goodbye.
- - 504 Command not implemented for that parameter.
- - 502 Command not implemented.
- - 421 Service not available, closing control connection.
- - 425 Can't open data connection.
- - 426 Connection closed; transfer aborted.
- - 430 Invalid username or password.
- - 530 Not logged in.
- - 534 Request denied for policy reasons.
+
+- 220 CS305 FTP server ready. (Welcome message. You can modify the name of the server name.)
+- 331 Username ok, send password. (Optional)
+- 230 Login successful.
+- 200 Type set to: Binary.
+- 213 xxxx (xxxx represents the size of the file)
+- 200 Active data connection established.
+- 125 Data connection already open. Transfer starting.
+- 226 Transfer complete.
+- 221 Goodbye.
+- 504 Command not implemented for that parameter.
+- 502 Command not implemented.
+- 421 Service not available, closing control connection.
+- 425 Can't open data connection.
+- 426 Connection closed; transfer aborted.
+- 430 Invalid username or password.
+- 530 Not logged in.
+- 534 Request denied for policy reasons.
 
 Basically, the code is for the server, and the sentence is for the user. So you can customize the messages, as long as the code is correct. These are not compulsory, i.e. you do not need to implement all of them.
 
@@ -82,6 +83,48 @@ In this screenshot, the commands are the ones after "Request: ", and the respons
 ## Environment Setup
 
 Python 3, preferably 3.9+, running on Linux system or WSL. Windows and macOS **may** also works, although they are not tested. Theoretically speaking, any system that can run Python and support `ftp` command should be fine.
+
+## Hand-by-hand Tutorial
+
+To implement the FTP server protocol, you need to handle various client commands. As an example, let's consider the `USER` command. In this example, we will assume that the client is in anonymous mode, i.e., the client does not have to provide any user identification information to the server.
+
+When the server receives the `USER` command from the client, it should record the information of the client and send a message back to inform the client that it has been logged on. You can use the `client.send()` method to send a message to the client through the control connection socket that has already been established.
+
+Here's an example code block that implements this behavior:
+
+```python
+if line[:4] == "USER":
+    # Record information of the client here
+    # ...
+  
+    # Send a message to the client to inform it that it has been logged on
+    message = "203 Logged on.\r\n"
+    client.send(message.encode())
+
+```
+
+Note that the message needs to be encoded as bytes before sending, as data transmission is implemented in binary. Also, make sure to include the \r\n characters at the end of the message to indicate the end of the message or command. Keep in mind that this is a simple example and you may need to modify this code block to match your specific needs. Additionally, it's important to note that re-establishing a socket to the same client with the same port will result in an error, so be careful not to do this.
+
+Another example is give in this part:
+
+```python
+ elif line[:4] == "STOR":
+
+            # Establish data connection
+            data_sock = socket.socket()
+            data_sock.connect((client_ip, client_port))
+            client.send(b"125 Data connection already open. Transfer starting.\r\n")
+
+            filename = line[5:]
+            with open(filename, 'wb') as f:
+                data = data_sock.recv(1024)
+                f.write(data)
+            client.send(b"226 Transfer complete.\r\n")
+            data_sock.close()
+
+```
+
+In this part you will handle command for `STOR`. This example is the utmost simple one. In this example, the server should first establish a socket to handle data transmission connection, using recorded client info. With `with` block you can handle file IO easily. Do not forget to close the socket after finishing transfer. This example is just a simple example, and *IS NOT* expected to work correctly. You HAVE TO implement this case by your own needs.
 
 ## Tasks (100 pts max)
 
@@ -112,4 +155,3 @@ Your script will be running on Python 3.10 running on Ubuntu 22.10.
 ### Criteria
 
 TBD
-
