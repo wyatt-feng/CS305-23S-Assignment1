@@ -94,10 +94,7 @@ Here's an example code block that implements this behavior:
 
 ```python
 if line[:4] == "USER":
-    # Record information of the client here
-    # ...
-  
-    # Send a message to the client to inform it that it has been logged on
+
     message = "203 Logged on.\r\n"
     client.send(message.encode())
 
