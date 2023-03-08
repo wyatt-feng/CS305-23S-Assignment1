@@ -46,7 +46,7 @@ PORT 127,0,0,1,135,7
 EPRT |127.0.0.1|34567|
 ```
 
-Note that the port number in the PORT command. It calculated like this: $135 \times 256+7=34567$(256 is a constant). In one connection, either PORT or EPRT will be sent by the client; usually, EPRT is the preferred, and if it not supported, PORT will be used.
+Note the port number in the PORT command. It calculated like this: $135 \times 256+7=34567$(256 is a constant). In one connection, either PORT or EPRT will be sent by the client; usually, EPRT is the preferred, and if it not supported, PORT will be used.
 
 Each command should be ended with `\r\n`, not `\r` or `\n`. Otherwise, the command will be considered incomplete.
 
