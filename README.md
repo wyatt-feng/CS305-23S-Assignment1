@@ -84,7 +84,7 @@ In this screenshot, the commands are the ones after "Request: ", and the respons
 
 Python 3, preferably 3.9+, running on Linux system or WSL. Windows and macOS **may** also works, although they are not tested. Theoretically speaking, any system that can run Python and support `ftp` command should be fine.
 
-## Hand-by-hand Tutorial
+## Step-by-step Tutorial
 
 To implement the FTP server protocol, you need to handle various client commands. As an example, let's consider the `USER` command. In this example, we will assume that the client is in anonymous mode, i.e., the client does not have to provide any user identification information to the server.
 
