@@ -52,9 +52,32 @@ Each command should be ended with `\r\n`, not `\r` or `\n`. Otherwise, the comma
 
 In response to the commands, the server will respond a 3-digit status code, followed by a sentence explaining the status code. For the meaning and common usage, you can refer to [this](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes). The same as commands, each response must be ended with `\r\n`.
 
+Here are some common responses:
+ - 220 CS305 FTP server ready. (Welcome message. You can modify the name of the server name.)
+ - 331 Username ok, send password. (Optional)
+ - 230 Login successful.
+ - 200 Type set to: Binary.
+ - 213 xxxx (xxxx represents the size of the file)
+ - 200 Active data connection established.
+ - 125 Data connection already open. Transfer starting.
+ - 226 Transfer complete.
+ - 221 Goodbye.
+ - 504 Command not implemented for that parameter.
+ - 502 Command not implemented.
+ - 421 Service not available, closing control connection.
+ - 425 Can't open data connection.
+ - 426 Connection closed; transfer aborted.
+ - 430 Invalid username or password.
+ - 530 Not logged in.
+ - 534 Request denied for policy reasons.
+
+Basically, the code is for the server, and the sentence is for the user. So you can customize the messages, as long as the code is correct. These are not compulsory, i.e. you do not need to implement all of them.
+
 To give you an overview of a complete connection, here is a screenshot of packets:
 
 ![](ftp_packets.png)
+
+In this screenshot, the commands are the ones after "Request: ", and the responses are after "Response: ". CRLF(`\r\n`) is ignored in the screenshot but you should **not** forget it. The grey items are TCP connections for data transfer.
 
 ## Environment Setup
 
