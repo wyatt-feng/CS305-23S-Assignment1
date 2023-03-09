@@ -121,7 +121,9 @@ Another example is give in this part:
 
 ```
 
-In this part you will handle command for `STOR`. This example is the utmost simple one. In this example, the server should first establish a socket to handle data transmission connection, using recorded client info. With `with` block you can handle file IO easily. Do not forget to close the socket after finishing transfer. This example is just a simple example, and *IS NOT* expected to work correctly. You HAVE TO implement this case by your own needs.
+In this section, you will be responsible for handling the `STOR` command. The given example is very basic, and should only serve as a guide. Firstly, the server must establish a socket to facilitate the data transmission connection(different from control connection established before) using the recorded client information by other commands. The `with` block can be used to manage file IO conveniently. Once the transfer is complete, remember to close the socket. It is crucial to note that this example **IS NOT** designed to function flawlessly, and it is your responsibility to implement this feature to meet your specific needs.
+
+Here we use two commands, `USER` and `STOR`, as examples to illustrate how to implement the FTP server protocol. You should implement the other commands in a similar way. As is also worthy to mention, the examples are not exhaustive, and you may need to implement other features to meet your specific needs. 
 
 ## Tasks (100 pts max)
 
