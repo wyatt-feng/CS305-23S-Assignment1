@@ -84,73 +84,72 @@ In this screenshot, the commands are the ones after "Request: ", and the respons
 
 Python 3, preferably 3.9+, running on Linux system or WSL. Windows and macOS **may** also works, although they are not tested. Theoretically speaking, any system that can run Python and support `ftp` command should be fine.
 
-## Step-by-step Tutorial
-
-To implement the FTP server protocol, you need to handle various client commands. As an example, let's consider the `USER` command. In this example, we will assume that the client is in anonymous mode, i.e., the client does not have to provide any user identification information to the server.
-
-When the server receives the `USER` command from the client, it should record the information of the client and send a message back to inform the client that it has been logged on. You can use the `client.send()` method to send a message to the client through the control connection socket that has already been established.
-
-Here's an example code block that implements this behavior:
-
-```python
-if line[:4] == "USER":
-
-    message = "203 Logged on.\r\n"
-    client.send(message.encode())
-
-```
-
-Note that the message needs to be encoded as bytes before sending, as data transmission is implemented in binary. Also, make sure to include the \r\n characters at the end of the message to indicate the end of the message or command. Keep in mind that this is a simple example and you may need to modify this code block to match your specific needs. Additionally, it's important to note that re-establishing a socket to the same client with the same port will result in an error, so be careful not to do this.
-
-Another example is give in this part:
-
-```python
- elif line[:4] == "STOR":
-
-            # Establish data connection
-            data_sock = socket.socket()
-            data_sock.connect((client_ip, client_port))
-            client.send(b"125 Data connection already open. Transfer starting.\r\n")
-
-            filename = line[5:]
-            with open(filename, 'wb') as f:
-                data = data_sock.recv(1024)
-                f.write(data)
-            client.send(b"226 Transfer complete.\r\n")
-            data_sock.close()
-
-```
-
-In this section, you will be responsible for handling the `STOR` command. The given example is very basic, and should only serve as a guide. Firstly, the server must establish a socket to facilitate the data transmission connection(different from control connection established before) using the recorded client information by other commands. The `with` block can be used to manage file IO conveniently. Once the transfer is complete, remember to close the socket. It is crucial to note that this example **IS NOT** designed to function flawlessly, and it is your responsibility to implement this feature to meet your specific needs.
-
-Here we use two commands, `USER` and `STOR`, as examples to illustrate how to implement the FTP server protocol. You should implement the other commands in a similar way. As is also worthy to mention, the examples are not exhaustive, and you may need to implement other features to meet your specific needs. 
-
 ## Tasks (100 pts max)
 
 In the following tasks you can **ONLY** use the python standard library, **excluding** the `ftplib` module. Failure to comply to the rule will lead to 0 score for this assignment, and the result cannot be appealed.
 
 ### Task 1: Implement basic file transferring (60 pts)
 
-TBD
+In this task, you should implement a basic FTP server that can:
+ - Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here out of security concerns, we use port 52305), accept connections, close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections.
+ - Anonymous logins (10 pts): Correctly handle USER command **AND** PASS command. After the user sends the username, you should prompt the client to submit the password. The value of the password does not matter in this task, but you can refer to the screenshot of packets given above to find the default password for anonymous login.
+ - Transfer files (40 pts in total): Correctly handle RETR (20 pts) and STOR (20 pts) command. Your server should be able to properly receive and store a file whose name and content are random strings and to properly transfer the file to the client, with its filename and content not modified. You **DO NOT** need to consider complicated cases in this task.
 
 ### Task 2: Error handling (30 pts)
 
-TBD
+In this task, you should optimize your server so that it can handle:
+ - File errors (10 pts): File not exist, file not accessible, illegal filename.
+ - Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
+ - Connection errors (10 pts): Connection establishment failure (control or data connection), connection interrupt, client down.
 
 ### Bonus Task (20 pts)
 
-TBD
+For bonus, you can implement zero or one or more of the following feature:
+ - User login control (5 pts): Store a list of users and the corresponding passwords, and determine if the username and password combination given by the client is correct.
+ - User privilege control (5 pts): In the list of users, select a superuser, who is the only one allowed to store files.
+ - Passive mode (5-10 pts): Implement the passive mode where the address of the data connection is chosen by the server who wait for the connection from clients. If you can handle connection establishment error and connection interruption, you can gain 5 extra points.
+ - More commands (3 pts each): Implement more commands other than required in Task 1 and 2, excluding the ones required in the previous bonus tasks. For example, FEAT, HELP, PWD, RMD, TYPE, LIST. You can implement error handling or other bonus tasks for these commands, you can get 2 extra points per command (5 pts each).
+You can also think of other bonus tasks, but it is not recommended because in that case, you cannot control your score.
+
+## Step-by-step Tutorial
+
+To implement an FTP server, you need to handle various client commands. Here we use two commands, `USER` and `STOR`, as examples to illustrate how to implement the FTP server protocol. You should implement the other commands in a similar way. As is also worthy to mention, the examples are not exhaustive, and you may need to implement other features to meet your specific needs. 
+
+Now let's consider the `USER` command. In this example, we will assume that the client is in anonymous mode, i.e., the client does not have to provide any user identification information to the server.
+
+When the server receives the `USER` command from the client, it should record the information of the client and send a message back to inform the client that it now has the username and requires the password. You can use the `client.send()` method to send a message to the client through the control connection socket that has already been established.
+
+Here's an example code block that implements this behavior:
+
+```python
+if command[:4] == "USER":
+    message = "331 Username ok, send passwork.\r\n"
+    client.send(message.encode())
+```
+
+Note that the message needs to be encoded as bytes before sending, as data transmission is implemented in binary. Also, make sure to include the `\r\n` characters at the end of the message to indicate the end of the message or command. Keep in mind that this is a simple example and you may need to modify this code block to match your specific needs. Additionally, it's important to note that re-establishing a socket to the same client with the same port will result in an error, so be careful not to do this.
+
+Another example is give in this part:
+
+```python
+ elif command[:4] == "STOR":
+    # Establish data connection
+    data_sock = socket.socket()
+    data_sock.connect((client_ip, client_port))
+    client.send(b"125 Data connection already open. Transfer starting.\r\n")
+
+    filename = command[5:]
+    with open(filename, 'wb') as f:
+        data = data_sock.recv(1024)
+        f.write(data)
+    client.send(b"226 Transfer complete.\r\n")
+    data_sock.close()
+```
+
+This is a snippet that handles STOR command. The given example is very basic, and should only serve as a guide. Firstly, the server must establish a socket to facilitate the data transmission connection (different from control connection established before) using the recorded client information by other commands (PORT or EPRT). The `with` block can be used to manage file IO conveniently. Once the transfer is complete, remember to close the socket and send back response. It is crucial to note that this example **IS NOT** designed to function flawlessly, and it is your responsibility to implement this feature to meet your specific needs.
+
+Hint: If you need more details of FTP and you think RFCs are too unintelligible, you can use [pyftpdlib](https://pyftpdlib.readthedocs.io/en/latest/tutorial.html#command-line-usage) to setup an FTP server, use `ftp` command as a client, and use WireShark to capture the interaction between them. Remember, pyftpdlib is not a standard library, so install it before using it.
 
 ## Grading
 
-### What to submit
-
-You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code, and the pdf file should include the screenshots of each task and some brief explanations. If there are any bonus points implemented, their functionality should be included in the pdf file, **otherwise they will not be considered!**
-
-### Environment
-
-Your script will be running on Python 3.10 running on Ubuntu 22.10.
-
-### Criteria
-
-TBD
+You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code. As for the pdf file, you should include the screenshot of the result of the testing script, which will be released later, **AND** the screenshot of the WireShark packets captured during the testing procedure. You should properly set the filter so that only the packets related to this assignment are shown, otherwise we will deduct 1~2 points from your final score on Sakai. Hint: you should include both data packets and control packets in the screenshot. If there are any bonus points implemented, their functionalities and screenshots of the code should be included in the pdf file, **otherwise they will not be considered!** Your implementation will be scored according to the criteria listed in the Task section.
