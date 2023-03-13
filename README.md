@@ -39,15 +39,16 @@ FTP uses the following command to control its status:
 | Command | Description                                                                | Usage                          |
 | ------- | -------------------------------------------------------------------------- | ------------------------------ |
 | USER    | Authentication username.                                                   | USER username                  |
+| PASS    | Authentication password.                                                   | PASS password                  |
 | PORT    | Specifies an address and port to which the server should connect.          | PORT xxx,xxx,xxx,xxx,yyy,yyy   |
 | EPRT    | Specifies an extended address and port to which the server should connect. | EPRT\|xxx.xxx.xxx.xxx\|yyyyy\| |
 | QUIT    | Disconnect.                                                                | QUIT                           |
-| STOR    | Accept the data and store the data as a file at the server site.        | STOR filename                  |
+| STOR    | Accept the data and store the data as a file at the server side.           | STOR filename                  |
 | RETR    | Retrieve a copy of the file.                                               | RETR filename                  |
 | SYST    | Return system type.                                                        | SYST                           |
 | SIZE    | Return the size of a file.                                                 | SIZE filename                  |
 
-In the above table, xxx represents a segment of the IP address, and yyy represents the port number. For example, if the server IP is 127.0.0.1, and the port number is 34567, then the PORT and the EPRT command sent by the client should be
+In the above table, xxx represents a segment of the IP address, and yyy represents the port number. For example, if the client IP is 127.0.0.1, and the port number is 34567, then the PORT and the EPRT command sent by the client should be
 
 ```
 PORT 127,0,0,1,135,7
@@ -108,7 +109,7 @@ In this task, you should implement a basic FTP server that can:
 In this task, you should optimize your server so that it can handle:
  - File errors (10 pts): File not exist, file not accessible, illegal filename.
  - Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
- - Connection errors (10 pts): Connection establishment failure (control or data connection), connection interrupted, client down.
+ - Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
 
 ### Other Tasks
 
@@ -154,7 +155,7 @@ Another example is the following code:
 
 This is a snippet that handles STOR command. The given example is very basic, and should only serve as a guide. Firstly, the server must establish a socket to facilitate the data transmission connection (different from the control connection established before) using the recorded client information by other commands (PORT or EPRT). The `with` block can be used to manage file IO conveniently. Once the transfer is complete, remember to close the socket and send back a response. It is crucial to note that this example **IS NOT** designed to function flawlessly, and it is your responsibility to implement this feature to meet your specific needs.
 
-Hint: If you need more details of FTP and you think RFCs are too unintelligible, you can use [pyftpdlib](https://pyftpdlib.readthedocs.io/en/latest/tutorial.html#command-line-usage) to setup an FTP server, use `ftp` command as a client, and use Wireshark to capture the interaction between them. Remember, pyftpdlib is not a standard library, so install it before using it.
+Hint: If you need more details of FTP and you think RFCs are too unintelligible, you can use [pyftpdlib](https://pyftpdlib.readthedocs.io/en/latest/tutorial.html#command-line-usage) to setup an FTP server, use `ftp` command or [ftplib](https://docs.python.org/3/library/ftplib.html) as a client, and use Wireshark to capture the interaction between them. Remember, pyftpdlib is not a standard library, so install it before using it.
 
 Usage of `ftp`: ftp [-P PORT] [[USER@]HOST:[PATH][/]]. For example, if you want to connect to a server on 127.0.0.1:52305, you can use `ftp -P 52305 127.0.0.1`. If you want to download a file named `ftp_srv.py` on the server, you can use `ftp -P 52305 127.0.0.1:ftp_srv.py`.
 
