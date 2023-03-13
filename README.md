@@ -6,7 +6,7 @@ Quote from Wikipedia:
 
 > The **File Transfer Protocol (FTP)** is a standard communication protocol used for the transfer of computer files from a server to a client on a computer network. FTP is built on a C/S model architecture using **separate control and data connections** between the client and the server.
 
-The goal of this assignment is to implement an **FTP Serv# CS305 2023 Spring Assignment 1 - FTP Server
+The goal of this assignment is to implement an **FTP Server**.
 
 ## Introduction
 
