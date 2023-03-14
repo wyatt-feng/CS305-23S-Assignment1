@@ -28,7 +28,7 @@ FTP protocol uses TCP socket (you can use socket in Python) for file transmissio
 
 FTP clients use the following commands:
 
-| Command | Description                                                                | Usage                          |
+| CMD | Description                                                                | Usage                          |
 | ------- | -------------------------------------------------------------------------- | ------------------------------ |
 | USER    | Authentication username.                                                   | USER username                  |
 | PASS    | Authentication password.                                                   | PASS password                  |
@@ -92,24 +92,28 @@ In the following tasks you can **ONLY** use the Python standard library, **exclu
 ### Task 1: Implement basic file transferring (60 pts)
 
 In this task, you should implement a basic FTP server that can:
- - Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here to avoid security concerns, we use port 52305), accept connections, and close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections. You should change the welcome message to your SID. For example, if my SID is 12116666, the welcome message should be: `220 12116666 ready.`
- - Anonymous logins (10 pts): Correctly handle USER command. After the user sends the username, the server should acknowledge that the login is successful.
- - Transfer files (40 pts in total): Correctly handle RETR (20 pts) and STOR (20 pts) commands. Your server should be able to properly receive and store a file whose name and content are random strings and to properly transfer a file to the client, with its filename and content not modified. You do not need to handle errors to get the points for this task.
+
+- Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here to avoid security concerns, we use port 52305), accept connections, and close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections. You should change the welcome message to your SID. For example, if my SID is 12116666, the welcome message should be: `220 12116666 ready.`
+- Anonymous logins (10 pts): Correctly handle USER command. After the user sends the username, the server should acknowledge that the login is successful.
+- Transfer files (40 pts in total): Correctly handle RETR (20 pts) and STOR (20 pts) commands. Your server should be able to properly receive and store a file whose name and content are random strings and to properly transfer a file to the client, with its filename and content not modified. You do not need to handle errors to get the points for this task.
 
 ### Task 2: Error handling (30 pts)
 
 In this task, you should optimize your server so that it can handle:
- - File errors (10 pts): File not exist, file not accessible, illegal filename.
- - Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
- - Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
+
+- File errors (10 pts): File not exist, file not accessible, illegal filename.
+- Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
+- Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
 
 ### Other Tasks (10 pts)
 
 For the remaining 10 points, you can implement one or more of the following features (Or no feature if you like):
- - User login control (5 pts): Store a list of users and the corresponding passwords on the hard drive, and determine if the username and password combination given by the client is correct when accepting connections.
- - User privilege control (5 pts): In the list of users from user login control, distinguish ordinary users and superusers, and only the superusers will be allowed to store files.
- - Passive mode (5-10 pts): Implement the passive mode where the address of the data connection is chosen by the server who waits for the connection from clients. If you can handle connection establishment errors and connection interruption, you can get 10 points.
- - More commands (2 pts each): Implement more commands other than those required in Task 1 and 2. For example, FEAT, HELP, PWD, RMD, TYPE, and LIST.
+
+- User login control (5 pts): Store a list of users and the corresponding passwords on the hard drive, and determine if the username and password combination given by the client is correct when accepting connections.
+- User privilege control (5 pts): In the list of users from user login control, distinguish ordinary users and superusers, and only the superusers will be allowed to store files.
+- Passive mode (5-10 pts): Implement the passive mode where the address of the data connection is chosen by the server who waits for the connection from clients. If you can handle connection establishment errors and connection interruption, you can get 10 points.
+- More commands (2 pts each): Implement more commands other than those required in Task 1 and 2. For example, FEAT, HELP, PWD, RMD, TYPE, and LIST.
+
 If you receive more than 10 points in this section, it can be a complement to previous tasks, but the overall score will not exceed 100. E.g. my scores for tasks 1 and 2 are 60 and 25, and I get 20 points in this section, the final score will be 100.
 
 ## Step-by-step Tutorial
