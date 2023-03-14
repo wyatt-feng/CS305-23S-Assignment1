@@ -20,13 +20,13 @@ Unfortunately, FTP is a highly developed protocol, so there is not much informat
 
 In case you know nothing about RFC, A **Request for Commands**(RFC) is a publication in a series from IETF which is in charge of setting the standards. All internet standards are defined in RFCs. Unfortunately, they are also known to be notoriously hard to understand. If you need extra help reading them, refer to [this](https://www.mnot.net/blog/2018/07/31/read_rfc).
 
-Don't be frightened - you only need ~3 hours to score 60, and another ~2 hours can help you score 90. Seems pretty easy to finish in 2 weeks, right?
+Don't be frightened. The workload for this assignment is not as frightening as at the first glance. The estimated time to score 90 is 5 hours - Seems pretty easy to finish in 2 weeks, right? It may be hard for you at first, but after you figure out how FTP works, you will definitely make it!
 
 ## Introduction to FTP
 
-FTP protocol uses TCP socket (you can use socket in Python) for file transmission. There are two modes for FTP: **standard** mode and **passive** mode. In standard mode, before transmitting the files, the client will send the server the address and the port number of the client, and then the server will connect to the designated address. In passive mode, the server will open a port and send the port number to the client, and after that, the server will wait for the client to connect to it. For this assignment, you only need to implement the standard mode.
+FTP protocol uses TCP socket (you can use socket in Python) for file transmission. There are two modes for FTP: **standard** mode and **passive** mode. In standard mode, before transmitting the files, the client will send the server the address and the port number of the client, and then the server will connect to the designated address. In passive mode, the server will open a port and send the port number to the client, and after that, the server will wait for the client to connect to it. For this assignment, you only need to implement the standard mode. The FTP commands and responses will be illustrated here, while how to send these responses will be covered in the step-by-step tutorial section.
 
-FTP uses the following command to control its status:
+FTP clients use the following commands:
 
 | Command | Description                                                                | Usage                          |
 | ------- | -------------------------------------------------------------------------- | ------------------------------ |
@@ -53,9 +53,9 @@ Each command should be ended with `\r\n`, not `\r` or `\n`. Otherwise, the comma
 
 In response to the commands, the server will respond with a 3-digit status code, followed by a sentence explaining the status code. For the meaning and common usage, you can refer to [this](https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes). The same as commands, each response must be ended with `\r\n`.
 
-Here are some common responses:
+Here are some common responses from the server:
 
-- 220 CS305 FTP server ready. (Welcome message. You can modify the name of the server name.)
+- 220 CS305 FTP server ready. (Welcome message. You can modify the part after 220)
 - 331 Username ok, send password. (Optional)
 - 230 Login successful.
 - 200 Type set to: Binary.
@@ -73,13 +73,13 @@ Here are some common responses:
 - 530 Not logged in.
 - 534 Request denied for policy reasons.
 
-The code is for the server, and the sentence is for the user. So you can customize the messages, as long as the code is correct. These are not compulsory, i.e. you do not need to implement all of them.
+The code is for the client program, and the sentence is for the user to read about the response. So you can customize the messages, as long as the code is correct. These are not compulsory, i.e. you do not need to implement all of them.
 
-To give you an overview of a complete connection, here is a screenshot of the packets:
+Basically, the procedure of an FTP connection is the client sending a command and then the server responding to the client. To give you an overview of a complete connection, here is a screenshot of the packets:
 
 ![](ftp_packets.png)
 
-In this screenshot, the commands are the ones after "Request: ", and the responses are after "Response: ". CRLF(`\r\n`) is ignored in the screenshot but you should **not** forget it. The grey items are TCP connections for data transfer. This file is also provided in the GitHub repository.
+In this screenshot, the commands are the ones after "Request: ", and the responses are after "Response: ". CRLF(`\r\n`) is ignored in the screenshot but you should **not** forget it. The grey items are TCP connections for data transfer. This file is also provided in the GitHub repository. If you try to use Wireshark to capture the connection on your own machine, you can use `ftp || tcp.port == 12345` as the filter given that the port of the data connection is 12345.
 
 ## Environment Setup
 
@@ -92,7 +92,7 @@ In the following tasks you can **ONLY** use the Python standard library, **exclu
 ### Task 1: Implement basic file transferring (60 pts)
 
 In this task, you should implement a basic FTP server that can:
- - Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here to avoid security concerns, we use port 52305), accept connections, and close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections.
+ - Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here to avoid security concerns, we use port 52305), accept connections, and close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections. You should change the welcome message to your SID. For example, if my SID is 12116666, the welcome message should be: `220 12116666 ready.`
  - Anonymous logins (10 pts): Correctly handle USER command. After the user sends the username, the server should acknowledge that the login is successful.
  - Transfer files (40 pts in total): Correctly handle RETR (20 pts) and STOR (20 pts) commands. Your server should be able to properly receive and store a file whose name and content are random strings and to properly transfer a file to the client, with its filename and content not modified. You do not need to handle errors to get the points for this task.
 
@@ -103,12 +103,14 @@ In this task, you should optimize your server so that it can handle:
  - Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
  - Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
 
-### Other Tasks
+### Other Tasks (10 pts)
 
 For the remaining 10 points, you can implement one or more of the following features (Or no feature if you like):
  - User login control (5 pts): Store a list of users and the corresponding passwords on the hard drive, and determine if the username and password combination given by the client is correct when accepting connections.
  - User privilege control (5 pts): In the list of users from user login control, distinguish ordinary users and superusers, and only the superusers will be allowed to store files.
- - Passive mode (5 pts): Implement the passive mode where the address of the data connection is chosen by the server who waits for the connection from clients. If you can handle connection establishment errors and connection interruption, you can get 5 extra points.
+ - Passive mode (5-10 pts): Implement the passive mode where the address of the data connection is chosen by the server who waits for the connection from clients. If you can handle connection establishment errors and connection interruption, you can get 10 points.
+ - More commands (2 pts each): Implement more commands other than those required in Task 1 and 2. For example, FEAT, HELP, PWD, RMD, TYPE, and LIST.
+If you receive more than 10 points in this section, it can be a complement to previous tasks, but the overall score will not exceed 100. E.g. my scores for tasks 1 and 2 are 60 and 25, and I get 20 points in this section, the final score will be 100.
 
 ## Step-by-step Tutorial
 
@@ -122,8 +124,8 @@ Here's an example code block that implements this behavior, which was part of th
 
 ```python
 if command[:4] == "USER":
-    message = "331 Username ok, send passwork.\r\n"
-    client.send(message.encode())
+    message = b"331 Username ok, send passwork.\r\n"
+    client.send(message)
 ```
 
 Note that the message needs to be encoded as bytes before sending, as data transmission is implemented in binary. Also, make sure to include the `\r\n` characters at the end of the message to indicate the end of the message or command. Keep in mind that this is a simple example and you may need to modify this code block to match your specific needs. Additionally, it's important to note that re-establishing a socket to the same client with the same port will result in an error, so be careful not to do this.
@@ -153,7 +155,11 @@ Usage of `ftp`: ftp [-P PORT] [[USER@]HOST:[PATH][/]]. For example, if you want 
 
 ## Grading
 
-You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code, and the main file of the code should be named `server.py`. As for the pdf file, you should include the screenshot of the result of the testing script, which will be released shortly on the GitHub repository, **AND** the screenshot of the Wireshark packets captured during the testing procedure. You should properly set the filter so that only the packets related to this assignment are shown, otherwise we will deduct 1~2 points from your final score on Sakai. Hint: you should include both data packets and control packets in the screenshot. If there are any additional points specified in section "Other Tasks" implemented, their functionalities and screenshots of the code should be included in the pdf file, **otherwise they will not be considered!** Your implementation will be scored according to the criteria listed in the Task section.
+You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code, and the main file of the code should be named `server.py`. As for the pdf file, you should include the screenshot of the result of the testing script, which will be released shortly on the GitHub repository, **AND** the screenshot of the Wireshark packets captured during the testing procedure. You should properly set the filter so that only the packets related to this assignment are shown, otherwise we will deduct 1~2 points from your final score on Sakai. You should include both data packets and control packets in the screenshot.
+
+If there are any additional points specified in section "Other Tasks", their functionalities and screenshots of the code should be included in the pdf file, **otherwise they will not be considered!** Your implementation will be scored according to the criteria listed in the Task section.
+
+Remember to change the welcome message of the server as instructed in Task 1.
 
 **This assignment will due on the Wednesday of week 7**. Late submission within 24 hours will lead to a 20% deduction. Later submissions will not be accepted.
 
