@@ -93,7 +93,7 @@ In the following tasks you can **ONLY** use the Python standard library, **exclu
 
 In this task, you should implement a basic FTP server that can:
  - Handle connections (10 pts): Listen on port 52305 (Usually FTP servers listen on port 21, but here to avoid security concerns, we use port 52305), accept connections, and close connections upon QUIT command. After closing a connection, it should continue to wait for succeeding connections.
- - Anonymous logins (10 pts): Correctly handle USER command **AND** PASS command. After the user sends the username, the server should prompt the client to submit the password. The value of the password does not matter in this task, but you can refer to the screenshot of the packets given above to find the default username and the password for anonymous login.
+ - Anonymous logins (10 pts): Correctly handle USER command. After the user sends the username, the server should acknowledge that the login is successful.
  - Transfer files (40 pts in total): Correctly handle RETR (20 pts) and STOR (20 pts) commands. Your server should be able to properly receive and store a file whose name and content are random strings and to properly transfer a file to the client, with its filename and content not modified. You do not need to handle errors to get the points for this task.
 
 ### Task 2: Error handling (30 pts)
