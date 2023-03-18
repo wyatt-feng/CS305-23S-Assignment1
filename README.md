@@ -1,5 +1,8 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
+## CHANGELOG
+**Mar. 18, 2023**: Delete from Task 2 "File transmission before connection" to avoid ambiguity.
+
 ## Introduction
 
 Quote from Wikipedia:
@@ -102,7 +105,7 @@ In this task, you should implement a basic FTP server that can:
 In this task, you should optimize your server so that it can handle:
 
 - File errors (10 pts): File not exist, file not accessible, illegal filename.
-- Command errors (10 pts): Operations before login, file transmission before connecting, illegal command (format error, command unrecognized, linefeed error).
+- Command errors (10 pts): Operations before login, illegal command (format error, command unrecognized, linefeed error).
 - Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
 
 ### Other Tasks (10 pts)
