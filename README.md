@@ -1,7 +1,9 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
 ## CHANGELOG
-**Mar. 18, 2023**: Delete from Task 2 "File transmission before connection" to avoid ambiguity.
+**Mar. 18, 2023**:
+1. Delete from Task 2 "File transmission before connection" to avoid ambiguity.
+2. Correct the format of EPRT command.
 
 ## Introduction
 
@@ -36,18 +38,18 @@ FTP clients use the following commands:
 | USER    | Authentication username.                                                   | USER username                  |
 | PASS    | Authentication password.                                                   | PASS password                  |
 | PORT    | Specifies an address and port to which the server should connect.          | PORT xxx,xxx,xxx,xxx,yyy,yyy   |
-| EPRT    | Specifies an extended address and port to which the server should connect. | EPRT\|xxx.xxx.xxx.xxx\|yyyyy\| |
+| EPRT    | Specifies an extended address and port to which the server should connect. | EPRT \|v\|xxx.xxx.xxx.xxx\|yyyyy\| |
 | QUIT    | Disconnect.                                                                | QUIT                           |
 | STOR    | Accept the data and store the data as a file at the server side.           | STOR filename                  |
 | RETR    | Retrieve a copy of the file.                                               | RETR filename                  |
 | SYST    | Return system type.                                                        | SYST                           |
 | SIZE    | Return the size of a file.                                                 | SIZE filename                  |
 
-In the above table, xxx represents a segment of the IP address, and yyy represents the port number. For example, if the client IP is 127.0.0.1, and the port number is 34567, then the PORT and the EPRT command sent by the client should be
+In the above table, v represents the version of IP (1 for IPv4, 2 for IPv6), xxx represents a segment of the IP address, and yyy represents the port number. For example, if the client IP is 127.0.0.1, and the port number is 34567, then the PORT and the EPRT command sent by the client should be
 
 ```
 PORT 127,0,0,1,135,7
-EPRT |127.0.0.1|34567|
+EPRT |1|127.0.0.1|34567|
 ```
 
 Note that the port number in the PORT command is calculated like this: $135 \times 256+7=34567$(256 is a constant). In one connection, either PORT or EPRT will be sent by the client; usually, EPRT is preferred, and if it is not supported, PORT will be used.
