@@ -4,6 +4,7 @@
 
 **Mar. 22, 2023**:
 1. Add instructions for user privilege control to allow anonymous writes.
+2. Delete from Task 2 "Client down" because it needs transport layer operations.
 
 **Mar. 18, 2023**:
 1. Delete from Task 2 "File transmission before connection" to avoid ambiguity.
@@ -112,7 +113,7 @@ In this task, you should optimize your server so that it can handle:
 
 - File errors (10 pts): File not exist, file not accessible, illegal filename.
 - Command errors (10 pts): Operations before login, illegal command (format error, command unrecognized, linefeed error).
-- Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files), client down.
+- Connection errors (10 pts): Connection establishment failure (e.g. the address given by EPRT command is unavailable), connection interrupted (e.g. the data or the control connection breaks up when transmitting files)
 
 ### Other Tasks (10 pts)
 
