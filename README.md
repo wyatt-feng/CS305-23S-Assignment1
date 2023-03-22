@@ -5,6 +5,7 @@
 **Mar. 22, 2023**:
 1. Add instructions for user privilege control to allow anonymous writes.
 2. Delete from Task 2 "Client down" because it needs transport layer operations.
+3. Add the usage for the testing script.
 
 **Mar. 18, 2023**:
 1. Delete from Task 2 "File transmission before connection" to avoid ambiguity.
@@ -68,7 +69,7 @@ Here are some common responses from the server:
 - 220 CS305 FTP server ready. (Welcome message. You can modify the part after 220)
 - 331 Username ok, send password. (Optional)
 - 230 Login successful.
-- 200 Type set to: Binary.
+- 200 Type set to binary.
 - 213 xxxx (xxxx represents the size of the file)
 - 200 Active data connection established.
 - 125 Data connection already open. Transfer starting.
@@ -178,3 +179,13 @@ Remember to change the welcome message of the server as instructed in Task 1.
 **This assignment will due on the Wednesday of week 7**. Late submission within 24 hours will lead to a 20% deduction. Later submissions will not be accepted.
 
 Should you have any questions, please raise an issue [here](https://github.com/dazhi0619/CS305-23S-Assignment1). This is also the place where later materials, announcements, and clarifications will be published, so remember to check it out frequently.
+
+### Usage of testing script
+
+[Here](https://github.com/dazhi0619/CS305-23S-Assignment1/releases) you can find the testing script. To use the testing script, you may have to implement `TYPE I` command, with the response being "200 Type set to binary." Rename your server code to be `server.py` and run it, then use the following command to run the testing script: 
+
+```
+python Assignment1_score.pyc
+```
+
+Then it will automatically rate your server. If you believe there is a problem when it is handling your server, you can raise an issue in the GitHub repository. In your testing output, you will see a random 6-character token. You should include a screenshot of the complete testing output **and** the token in text some where conspicuous in your pdf report. It will be taken as academic misconduct if you turn in a fake screenshot or if your screenshot does not correspond with the code you turn in.
