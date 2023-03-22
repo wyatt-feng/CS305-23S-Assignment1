@@ -1,6 +1,10 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
 ## CHANGELOG
+
+**Mar. 22, 2023**:
+1. Add instructions for user privilege control to allow anonymous writes.
+
 **Mar. 18, 2023**:
 1. Delete from Task 2 "File transmission before connection" to avoid ambiguity.
 2. Correct the format of EPRT command.
@@ -115,7 +119,7 @@ In this task, you should optimize your server so that it can handle:
 For the remaining 10 points, you can implement one or more of the following features (Or no feature if you like):
 
 - User login control (5 pts): Store a list of users and the corresponding passwords on the hard drive, and determine if the username and password combination given by the client is correct when accepting connections.
-- User privilege control (5 pts): In the list of users from user login control, distinguish ordinary users and superusers, and only the superusers will be allowed to store files.
+- User privilege control (5 pts): In the list of users from user login control, distinguish ordinary users and superusers, and only the superusers will be allowed to store files. If you choose to implement this task, you should also give anonymous users privilege to write files to pass the test of Task 1.
 - Passive mode (5-10 pts): Implement the passive mode where the address of the data connection is chosen by the server who waits for the connection from clients. If you can handle connection establishment errors and connection interruption, you can get 10 points.
 - More commands (2 pts each): Implement more commands other than those required in Task 1 and 2. For example, FEAT, HELP, PWD, RMD, TYPE, and LIST.
 
