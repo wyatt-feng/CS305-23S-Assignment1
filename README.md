@@ -188,4 +188,4 @@ Should you have any questions, please raise an issue [here](https://github.com/d
 python Assignment1_score.pyc
 ```
 
-Then it will automatically rate your server. If you believe there is a problem when it is handling your server, you can raise an issue in the GitHub repository. In your testing output, you will see a random 6-character token. You should include a screenshot of the complete testing output **and** the token in text some where conspicuous in your pdf report. It will be taken as academic misconduct if you turn in a fake screenshot or if your screenshot does not correspond with the code you turn in.
+Then it will automatically rate your server. If you found the testing script sends two consecutive blank data packets before your client crashes, please reach out to FENG Dazhi, your SA, before the due date. In your testing output, you will see a random 6-character token. You should include a screenshot of the complete testing output **and** the token in text some where conspicuous in your pdf report. It will be taken as academic misconduct if you turn in a fake screenshot or if your screenshot does not correspond with the code you turn in.
