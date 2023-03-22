@@ -5,7 +5,7 @@
 **Mar. 22, 2023**:
 1. Add instructions for user privilege control to allow anonymous writes.
 2. Delete from Task 2 "Client down" because it needs transport layer operations.
-3. Add the usage for the testing script.
+3. Add the usage for the [testing script](https://github.com/dazhi0619/CS305-23S-Assignment1/releases).
 
 **Mar. 18, 2023**:
 1. Delete from Task 2 "File transmission before connection" to avoid ambiguity.
