@@ -2,6 +2,9 @@
 
 ## CHANGELOG
 
+**Mar. 23, 2023**:
+1. Instructions on how to let Wireshark decode the packets.
+
 **Mar. 22, 2023**:
 1. Add instructions for user privilege control to allow anonymous writes.
 2. Delete from Task 2 "Client down" because it needs transport layer operations.
@@ -179,6 +182,10 @@ Remember to change the welcome message of the server as instructed in Task 1.
 **This assignment will due on the Wednesday of week 7**. Late submission within 24 hours will lead to a 20% deduction. Later submissions will not be accepted.
 
 Should you have any questions, please raise an issue [here](https://github.com/dazhi0619/CS305-23S-Assignment1). This is also the place where later materials, announcements, and clarifications will be published, so remember to check it out frequently.
+
+### How to let Wireshark decode the packets
+
+After capturing all the packets, you may find that none of them are decoded as FTP stream. Now this section will tell you how to decode them to assist your debugging and to fulfill the grading requirements. First, you should set the display filter to be `tcp.port==52305`. Then, in the menu bar, choose "Analyze" drop down menu and then "Decode As..." option. Now, there will be a pop-up window that contains a blank field with some icons (+, -, copy, clear) in the lower left corner. If so, click "+" icon, then select "TCP Port" for "field" field, 52305 for "value", "FTP" for "current", and the rest left blank. Then press OK. Now the packets should be correctly decoded.
 
 ### Usage of testing script
 
