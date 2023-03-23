@@ -4,6 +4,7 @@
 
 **Mar. 23, 2023**:
 1. Instructions on how to let Wireshark decode the packets.
+2. Clarify grading requirements on Other Tasks. Your report should now include necessary explanations to your code that implements Other Tasks.
 
 **Mar. 22, 2023**:
 1. Add instructions for user privilege control to allow anonymous writes.
@@ -175,7 +176,7 @@ Usage of `ftp`: ftp [-P PORT] [[USER@]HOST:[PATH][/]]. For example, if you want 
 
 You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code, and the main file of the code should be named `server.py`. As for the pdf file, you should include the screenshot of the result of the testing script, which will be released shortly on the GitHub repository, **AND** the screenshot of the Wireshark packets captured during the testing procedure. You should properly set the filter so that only the packets related to this assignment are shown, otherwise we will deduct 1~2 points from your final score on Sakai. You should include both data packets and control packets in the screenshot.
 
-If there are any additional points specified in section "Other Tasks", their functionalities and screenshots of the code should be included in the pdf file, **otherwise they will not be considered!** Your implementation will be scored according to the criteria listed in the Task section.
+If there are any additional points specified in section "Other Tasks", their functionalities and screenshots of the code (and necessary explanations) should be included in the pdf file, **otherwise they will not be considered!** If your code is so incomprehensible that your SA cannot grasp it or you cannot explain it yourself, there will be deduction on your score. Packet capture is not necessary for these tasks. Your implementation will be scored according to the criteria listed in the Task section.
 
 Remember to change the welcome message of the server as instructed in Task 1.
 
