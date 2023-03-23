@@ -1,5 +1,9 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
+## Notice
+
+I would really appreciate it if you can read through this document and the issues posted before you reach out to me，so please do not be suprised to find your issue closed with no comment if the answer to your problem is right in the document. From now on, I will only accept questions directly related to the testing script/the document, and if you encountered problems regarding the Python language, or you need help debugging your code, I strongly suggest you ask other SAs because I have been overwhelmed by loads of requests and consequently have been unavailable. Please do not take it personally if you hear no response from me. 
+
 ## CHANGELOG
 
 **Mar. 23, 2023**:
