@@ -6,6 +6,9 @@ I would really appreciate it if you can read through this document and the issue
 
 ## CHANGELOG
 
+**Mar. 28, 2023**:
+1. Section "If you cannot capture packets in WSL..."
+
 **Mar. 23, 2023**:
 1. Instructions on how to let Wireshark decode the packets.
 2. Clarify grading requirements on Other Tasks. Your report should now include necessary explanations to your code that implements Other Tasks.
@@ -180,7 +183,7 @@ Usage of `ftp`: ftp [-P PORT] [[USER@]HOST:[PATH][/]]. For example, if you want 
 
 You should turn in a **zip** file *and* a **pdf** file. The zip file should include all of your code, and the main file of the code should be named `server.py`. As for the pdf file, you should include the screenshot of the result of the testing script, which will be released shortly on the GitHub repository, **AND** the screenshot of the Wireshark packets captured during the testing procedure. You should properly set the filter so that only the packets related to this assignment are shown, otherwise we will deduct 1~2 points from your final score on Sakai. You should include both data packets and control packets in the screenshot.
 
-If there are any additional points specified in section "Other Tasks", their functionalities and screenshots of the code (and necessary explanations) should be included in the pdf file, **otherwise they will not be considered!** If your code is so incomprehensible that your SA cannot grasp it or you cannot explain it yourself, there will be deduction on your score. Packet capture is not necessary for these tasks. Your implementation will be scored according to the criteria listed in the Task section.
+If there are any additional points specified in section "Other Tasks", their functionalities and screenshots of the code (and necessary explanations) should be included in the pdf file, **otherwise they will not be considered!** If your code is so incomprehensible that your SA cannot grasp it or you cannot explain it yourself, there will be deductions on your score. Packet capture is not necessary for these tasks. Your implementation will be scored according to the criteria listed in the Task section.
 
 Remember to change the welcome message of the server as instructed in Task 1.
 
@@ -201,3 +204,7 @@ python Assignment1_score.pyc
 ```
 
 Then it will automatically rate your server. If you found the testing script sends two consecutive blank data packets before your client crashes, please reach out to FENG Dazhi, your SA, before the due date. In your testing output, you will see a random 6-character token. You should include a screenshot of the complete testing output **and** the token in text some where conspicuous in your pdf report. It will be taken as academic misconduct if you turn in a fake screenshot or if your screenshot does not correspond with the code you turn in.
+
+### If you cannot capture packets in WSL...
+
+For those whose code can only run in WSL but not on Windows and who does not know how to capture packets in WSL, there are several options for you. You can install Wireshark in WSL and try to capture the packets, although it may be slightly troublesome to install GUI environment in WSL. An easier way is to use `tcpdump` to capture the packets, save it, and analyze it using Wireshark on Windows. Nevertheless, if you still do not know how to do it, you can leave out the screenshot in your report and explain the reason. However, if your SA fails to reproduce the test result, your score will suffer a rather significant deduction.
