@@ -8,6 +8,8 @@ You have all done GREAT! Now this repository will be archived.
 
 If you still have any questions about this assignment, FTP protocol, or CS305, you are welcome to contact me through QQ or Email.
 
+The source code of the testing script is uploaded.
+
 **Mar. 28, 2023**:
 1. Section "If you cannot capture packets in WSL..."
 
