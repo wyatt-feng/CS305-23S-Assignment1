@@ -1,10 +1,12 @@
 # CS305 2023 Spring Assignment 1 - FTP Server
 
-## Notice - READ before you ask!
-
-I would really appreciate it if you can read through this document and the issues posted before you reach out to me. From now on, I will only accept questions **directly related to the testing script/the document**, and if you encountered problems regarding the Python language/`ftp` command, or you need help debugging your code/setting up the environment, I strongly suggest you ask other SAs because I have been overwhelmed with loads of requests and consequently have been unavailable. So please be not suprised to find your issue closed with no comment if the issue is irrelevant. Please do not message me on messaging apps, either.
-
 ## CHANGELOG
+
+**Apr. 1, 2023**:
+
+You have all done GREAT! Now this repository will be archived. 
+
+If you still have any questions about this assignment, FTP protocol, or CS305, you are welcome to contact me through QQ or Email.
 
 **Mar. 28, 2023**:
 1. Section "If you cannot capture packets in WSL..."
